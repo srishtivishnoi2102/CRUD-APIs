@@ -1,0 +1,31 @@
+{
+  "name": "crud-apis",
+  "version": "1.0.0",
+  "description": "CRUD APIs for courses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srishtivishnoi2102/CRUD-APIs.git"
+  },
+  "keywords": [
+    "CRUD",
+    "Express",
+    "Javascript",
+    "Node"
+  ],
+  "author": "Srishti Vishnoi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/srishtivishnoi2102/CRUD-APIs/issues"
+  },
+  "homepage": "https://github.com/srishtivishnoi2102/CRUD-APIs#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

@@ -1,0 +1,67 @@
+{
+    "courses": [
+      {
+        "id": "1",
+        "name": "ds",
+        "description": "This is empty course",
+        "enrolledStudents": [],
+        "availableSlots": "7"
+      },
+      {
+        "id": "2",
+        "name": "adds",
+        "description": "This is empty course",
+        "enrolledStudents": [
+          {
+            "id": "1",
+            "name": "srishti"
+          }
+        ],
+        "availableSlots": "17"
+      },
+      {
+        "id": "3",
+        "name": "cos",
+        "description": "This is empty course",
+        "enrolledStudents": [],
+        "availableSlots": "17"
+      },
+      {
+        "id": "4",
+        "name": "cd",
+        "description": "This is empty course",
+        "enrolledStudents": [],
+        "availableSlots": "17"
+      },
+      {
+        "id": "5",
+        "name": "cd",
+        "description": "This is empty course",
+        "enrolledStudents": [],
+        "availableSlots": "17"
+      },
+      {
+        "id": "6",
+        "name": "Cooking",
+        "description": "This is a Cooking course",
+        "enrolledStudents": [
+          {
+            "id": "1",
+            "name": "srishti"
+          },
+          {
+            "id": "2",
+            "name": "pappu"
+          }
+        ],
+        "availableSlots": "6"
+      },
+      {
+        "id": "7",
+        "name": "Yoga",
+        "description": "This is a course for Yoga",
+        "enrolledStudents": [],
+        "availableSlots": "4"
+      }
+    ]
+  }
