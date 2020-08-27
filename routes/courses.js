@@ -3,24 +3,26 @@ const fs= require('fs');
 const { strict } = require('assert');
 // const { get } = require('http');
 const router = express.Router();
+const {checkToken}=require('./middleware/index');
 
 
 
 // List all courses:
-router.get('/', (req, res) => {
+router.get('/', checkToken, (req, res,next) => {
+
     fs.readFile('data/courses.json',(err,data)=>{
         if(err){
-             res.json({
+            return res.json({
                  error: "Failed to read the file"
              });
         }
-        // console.log(data);
+        console.log(data);
 
         data=JSON.parse(data);
         // console.log(data);
         // console.log(data.courses);
         if(data.courses.length ==0){
-             res.json({
+             return res.json({
                  success: false,
                  message:"No course to display"
              });
@@ -33,7 +35,7 @@ router.get('/', (req, res) => {
             "name":course.name
             });
         });
-         res.json({
+         return res.json({
              "data":courseList,
              "error":null
          });
@@ -43,7 +45,7 @@ router.get('/', (req, res) => {
 });
 
 // Get information about course of given courseid
-router.get('/:courseid', (req, res) => {
+router.get('/:courseid',checkToken, (req, res) => {
     const courseid= parseInt(req.params.courseid);
     fs.readFile('data/courses.json',(err,data)=>{
         if(err){
@@ -76,7 +78,7 @@ router.post('/', (req, res) => {
     const description= req.body.description;
     const availableSlots=req.body.availableSlots;
 
-    if(!name || !description || !availableSlots){
+    if(!name || !description || !availableSlots || parseInt(availableSlots)<1){
          return res.send({
              Error:"Invalid Payload"
          });

@@ -23,7 +23,10 @@
   },
   "homepage": "https://github.com/srishtivishnoi2102/CRUD-APIs#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "await-to-js": "^2.1.1",
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
