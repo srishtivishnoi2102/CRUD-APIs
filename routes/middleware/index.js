@@ -3,9 +3,11 @@ const jwt = require('jsonwebtoken');
 const { use } = require('../courses');
 
 
+
 const salt = 'c3Jpc2h0aQo';
 
 const checkToken = (req,res,next)=>{
+    console.log("Checking Token");
     const bearerHeader=req.headers["authorization"];
     if(bearerHeader!=undefined){
         const token= bearerHeader.split(" ")[1];

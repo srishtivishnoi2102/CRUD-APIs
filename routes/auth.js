@@ -9,6 +9,13 @@ const router = express.Router();
 
 let user;
 
+const dbHandleError=(res,err)=>{
+    console.log("Error in executing query, ",{error:err});
+        return res.json({
+            msg:`Error in executing query`,
+            err:err
+        });
+}
 
 
 const encryptPassword = async(password) => {
@@ -26,20 +33,26 @@ const encryptPassword = async(password) => {
 router.post('/signup', async function (req, res)  {
     let {username, email, password}=req.body;
     const encryptedPassword= await encryptPassword(password);
-    const signupUserQuery=`INSERT INTO \`users\` (\`email\`, \`name\`, \`hashPassword\`) VALUES ( \'${email}\', \'${username}\', \'${encryptedPassword}\')`;
-    user={
-        username,
-        email,
-        encryptedPassword
+
+    var err,response;
+    const checkIfUserExistsSql=`SELECT * from users where email='${email}';`;
+    [err,response]=await to(mydb.executeQuery(checkIfUserExistsSql));
+    if(err){
+        dbHandleError(res,err);
+    }
+    if(response.length!=0){
+        console.log("Email already registered");
+        return res.json({
+            success:false,
+            msg:`Email ${email} already registered. Please Login`,
+        });
     }
 
-    var err, response;
+    const signupUserQuery=`INSERT INTO users (email, name, hashPassword) VALUES ( '${email}', '${username}', '${encryptedPassword}')`;
+
     [err,response]=await to(mydb.executeQuery(signupUserQuery));
     if(err){
-        console.log('Error in inserting data into the database',{error:err});
-        return  res.json({
-            error:'Error in inserting data into the database'
-        });
+        dbHandleError(res,err);
     }
     console.log("Successfully inserted data into user table::Signup Done");
     return  res.json({
@@ -65,16 +78,12 @@ router.post('/login', async function(req, res){
     var err,response;
     [err,response]=await to(mydb.executeQuery(ifUserExistsSql));
     if(err){
-        console.log("Error in executing query, ",{error:err});
-        return res.json({
-             msg:`Error in executing query`,
-             err:err
-         });
+        dbHandleError(res,err);
     }
     
     if(response.length==0){
          return res.json({
-             msg: "Email not registered, please login first"
+             msg: "Email not registered, please signup first"
          });
     }
  
@@ -100,10 +109,7 @@ router.post('/login', async function(req, res){
     console.log("login query ::",loginSql);
     [err,response]=await to(mydb.executeQuery(loginSql));
     if(err){
-        console.log("Error changing the logged in status in db, ",{error:err});
-         return res.json({
-             err:"error in login"
-         });
+        dbHandleError(res,err);
     }
     return res.json({
         msg:"login successful",
