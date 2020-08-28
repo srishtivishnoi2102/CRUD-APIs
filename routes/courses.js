@@ -1,75 +1,86 @@
 const express = require('express');
 const fs= require('fs');
 const { strict } = require('assert');
+const { to } = require('await-to-js');
+
 // const { get } = require('http');
 const router = express.Router();
-const {checkToken}=require('./middleware/index');
+const checkToken=require('./middleware/index');
+const mydb=require("../lib/datacentre/mysql");
+router.use(checkToken);
 
 
 
 // List all courses:
-router.get('/', checkToken, (req, res,next) => {
-
-    fs.readFile('data/courses.json',(err,data)=>{
-        if(err){
-            return res.json({
-                 error: "Failed to read the file"
-             });
-        }
-        console.log(data);
-
-        data=JSON.parse(data);
-        // console.log(data);
-        // console.log(data.courses);
-        if(data.courses.length ==0){
-             return res.json({
-                 success: false,
-                 message:"No course to display"
-             });
-        }
-        // console.log(data);
-        const courseList=[];
-        data.courses.forEach(course => {
-            courseList.push({
-            "id":course.id,
-            "name":course.name
-            });
+router.get('/', checkToken, async(req, res,next) => {
+    
+   const getAllCoursesSql =`select id,name,description from courses`
+   var err, response;
+   [err, response]=await to(mydb.executeQuery(getAllCoursesSql));
+   if(err){
+        console.log("Error in executing query, ",{error:err});
+        return res.json({
+            msg:`Error in executing query`,
+            err:err
         });
-         return res.json({
-             "data":courseList,
-             "error":null
-         });
-        
+    }
 
-    });
+    return  res.json({
+                success:true,
+                data:{
+                    courses:response
+                },
+                err:null
+            });
+
+    
 });
 
 // Get information about course of given courseid
-router.get('/:courseid',checkToken, (req, res) => {
+router.get('/:courseid',checkToken, async(req, res) => {
     const courseid= parseInt(req.params.courseid);
-    fs.readFile('data/courses.json',(err,data)=>{
-        if(err){
-             res.json({
-                 "error": "Failed to read the file"
-             });
-        }
-        data=JSON.parse(data);
-     
-        if(data.courses.length ==0){
-             res.json({
-                 "error":"No course to display"
-             });
-        }
-        
-        if(courseid>0  && courseid<=data.courses.length){
-            return  res.json(data.courses[courseid-1]);
-        }
-        return res.json({
-             "error":"No course available with course id "
-         });
-        
 
-    });
+    const getAllCoursesSql =`select * from courses where id='${courseid}'`
+   var err, response;
+   [err, response]=await to(mydb.executeQuery(getAllCoursesSql));
+   if(err){
+        console.log("Error in executing query, ",{error:err});
+        return res.json({
+            msg:`Error in executing query`,
+            err:err
+        });
+    }
+    
+    if(response.length==0){
+         return res.json({
+             success:false,
+             msg: "No course exist with the requested id"
+         });
+    }
+
+    response=response[0];
+    const enrolledStudentSql= `SELECT enrollment.studentId,users.name FROM enrollment JOIN users WHERE enrollment.studentId=users.id and enrollment.courseid='${courseid}'`;
+    var enrolledStudents;
+    [err,enrolledStudents]= await to (mydb.executeQuery(enrolledStudentSql));
+    if(err){
+        console.log("Error in executing query, ",{error:err});
+        return res.json({
+            msg:`Error in executing query`,
+            err:err
+        });
+    }
+    response['enrolledStudent']=enrolledStudents;
+    console.log(response);
+    return  res.json({
+                success:true,
+                data:{
+                    courses:response
+                },
+                err:null
+            });
+
+    
+    
 });
 
 // Add a course

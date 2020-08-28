@@ -1,39 +1,26 @@
 const express=require('express');
+const mydb=require("./lib/datacentre/mysql")
+const bodyParser=require('body-parser');
+const courseRouter=require('./routes/courses');
+const studentRouter=require('./routes/student');
+const authRouter=require('./routes/auth');
+
+
+
 const app =new express();
 
-// const myToken= "21021999";
+mydb.connectDb();
 
 app.use(express.json());
+app.use(bodyParser.json());
 
-// function myTokenMiddleware(req,res,next){
-//     console.log("I am the best myTokenMiddleware");
-//     const token=req.headers.token;
-
-
-//     // console.log("token    ",token);
-//     // console.log("mytoken  ",myToken);
-    
-    
-//     if(token===myToken){
-//         console.log("Token Valid");
-//         next();
-         
-//     }else{
-//         console.log("Token Invalid");
-//         return res.json({success: false, message: "Invalid Token"});
-//     }
-// }
-
-// app.use(myTokenMiddleware);
-
-
-app.use('/api/courses',require('./routes/courses'));   //route for courses
-app.use('/api/students',require('./routes/student'));   //route for student
-app.use('/auth',require('./routes/auth'));   //route for auth
+app.use('/api/courses',courseRouter);   //route for courses
+app.use('/api/students',studentRouter);   //route for student
+app.use('/auth',authRouter);   //route for auth
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
