@@ -8,11 +8,21 @@
 		{
 			"name": "Getting available courses",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhcHB1IiwiZW1haWwiOiJwYXBwdUBzcmlzaHRpLmNvbSIsImVuY3J5cHRlZFBhc3N3b3JkIjoiJDJiJDEyJE8zclhkT3FxRTY4TUVxdi9odmJ3TnUuOVdWSFBrejBFUEY3VEFOWGZQWTF1TU5PcUw2aU9PIiwiaWF0IjoxNTk4MjA5NDUwLCJleHAiOjE2MDY4NDk0NTB9.kmPVYVZIY2vivWgQyKAuUEYfgG9a4QqSH8kltusSteg\"",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
 						"key": "token",
-						"value": "\"74544\"",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhcHB1IiwiZW1haWwiOiJwYXBwdUBzcmlzaHRpLmNvbSIsImVuY3J5cHRlZFBhc3N3b3JkIjoiJDJiJDEyJDFDUjVFdllmV2I2VmdVOU8vV1lGN2VWbTh2WkxxL1I1b21qNE95d0pGeExoQW55UENnNUNtIiwiaWF0IjoxNTk4MjEwNTcyLCJleHAiOjE2MDY4NTA1NzJ9.PnxVAXGJnjDmNbD3pv_sgJfh6Nm2NPvvJWnz6Y_tL44",
 						"type": "text"
 					}
 				],
@@ -35,7 +45,19 @@
 			"name": "Getting details of particular Course",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "token",
+						"value": "21021999",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "localhost:3000/api/courses/:courseid",
 					"host": [
@@ -50,7 +72,7 @@
 					"variable": [
 						{
 							"key": "courseid",
-							"value": "6"
+							"value": "3"
 						}
 					]
 				}
@@ -61,10 +83,16 @@
 			"name": "Adding Student",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "21021999",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"mta\"\n}",
+					"raw": "{\n    \"name\":\"divya\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +118,13 @@
 			"name": "Getting Available Students",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "21021999",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "localhost:3000/api/students/",
 					"host": [
@@ -110,10 +144,16 @@
 			"name": "Student Enrollment in course",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "21021999",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"studentId\":\"5\"\n}",
+					"raw": "{\n    \"studentId\":\"1\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -136,7 +176,7 @@
 					"variable": [
 						{
 							"key": "courseId",
-							"value": "6"
+							"value": "3"
 						}
 					]
 				}
@@ -147,10 +187,16 @@
 			"name": "Deregister Enrollment of student from a course",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "21021999",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"studentId\":\"3\"\n}",
+					"raw": "{\n    \"studentId\":2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,7 +219,7 @@
 					"variable": [
 						{
 							"key": "courseId",
-							"value": "6"
+							"value": "3"
 						}
 					]
 				}
@@ -184,10 +230,16 @@
 			"name": "Adding Courses",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "21021999",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n  \"name\": \"Yoga\",\n  \"description\": \"This is a course for Yoga\",\n  \"availableSlots\": \"4\"\n}\n",
+					"raw": "\n{\n  \"name\": \"disco\",\n  \"description\": \"This is a course for Yoga\",\n  \"availableSlots\": 1\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -204,6 +256,63 @@
 						"api",
 						"courses",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"jadu\",\n    \"email\": \"jadu@gmail.com\",\n    \"password\" :\"iamjadu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"auth",
+						"signup"
+					]
+				},
+				"description": "Signup\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"jadu@gmail.com\",\n    \"password\" :\"iamjadu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"login"
 					]
 				}
 			},
